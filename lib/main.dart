@@ -1,3 +1,4 @@
+import 'package:book_store/book.dart';
 import 'package:book_store/book_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -93,6 +94,34 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
+          body:
+              bookService.bookList.isEmpty
+                  ? Center(
+                    child: Text(
+                      "검색어를 입력해 주세요",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  )
+                  : ListView.builder(
+                    itemCount: bookService.bookList.length,
+                    itemBuilder: (context, index) {
+                      Book book = bookService.bookList[index];
+                      return ListTile(
+                        leading: Image.network(
+                          book.thumbnail,
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        ),
+                        title: Text(book.title),
+                        subtitle: Text(book.subtitle),
+                      );
+                    },
+                  ),
         );
       },
     );
